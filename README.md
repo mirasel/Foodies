@@ -14,26 +14,26 @@ Here are some examples from both admin and user respect of view-
 
 ## User View
 Home page
-![GitHub Logo](/Images/user/home_u.png)
+![GitHub Logo](/Images/home.png)
 
 Menu page
-![GitHub Logo](/Images/user/menu_u.png)
+![GitHub Logo](/Images/menu_u.png)
 
 Rating a menu
-![GitHub Logo](/Images/user/rating_u.png)
+![GitHub Logo](/Images/rating.png)
 
 ## Admin View
 Menu page - admin can edit or delete menu from here
-![GitHub Logo](/Images/admin/edit_a.png)
+![GitHub Logo](/Images/edit.png)
 
 Menu edit option
-![GitHub Logo](/Images/admin/menu_a.png)
+![GitHub Logo](/Images/menu_a.png)
 
 Adding new place for restaurants
-![GitHub Logo](/Images/admin/place.png)
+![GitHub Logo](/Images/place.png)
 
 Adding new restaurant
-![GitHub Logo](/Images/admin/restaurant.png)
+![GitHub Logo](/Images/restaurant.png)
 
 Adding new menu
-![GitHub Logo](/Images/admin/menu.png)
+![GitHub Logo](/Images/menu.png)
