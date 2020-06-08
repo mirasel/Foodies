@@ -6,6 +6,12 @@ And Also an admin panel by which admin of this website can edit menus or delete 
 
 Here are some examples from both admin and user respect of view-
 
+## Sign up
+![GitHub Logo](/Images/signup.png)
+
+### Login
+![GitHub Logo](/Images/login.png)
+
 ## User View
 Home page
 ![GitHub Logo](/Images/user/home_u.png)
