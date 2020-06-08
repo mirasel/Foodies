@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Menu{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'restuarant/css/menu.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'restuarant/css/edit.css' %}" />
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+{% endblock %}
+{% block body %}
+<div class="container" style="margin-top:5px">
+  <h1>{{restname}}:</h1>
+</div>
+<div class="album py-5 bg-transparent" style="padding-top:1.5rem!important;">
+  <div class="container">
+
+    <div class="row">
+      {% for m in rest.menu_set.all %}
+      <div class="col-md-3">
+        <a class="btn rbtn" style="color:inherit">
+          <div class="br card mb-3 shadow-sm">
+            <img class="br" src="{{m.menupic.url}}" height="200" width="200" />
+            <div class="card-body">
+              <p class="card-text">{{m.menuName}}</p>
+              <p class="card-text">{{m.price}}Tk</p>
+              <div class="star" id="_{{m.id}}">
+                <div class="stars-outer">
+                  <div class="stars-inner"></div>
+                </div>
+              </div>
+              {% if user.is_superuser %}
+              <div class="s_btn">
+                <a class="btn btn-primary" style="color:inherit" onclick="olayon1()">Edit</a>
+                <a class="btn btn-danger" style="color:inherit" href="{% url 'restuarant:delete' restid m.id %}">Delete</a>
+              </div>
+              {% elif user.is_authenticated %}
+              <div class="s_btn">
+                <a class="btn btn-warning" onclick="olayon('{{m.menupic.url}}','{{m.menuName}}-{{m.price}}Tk'),{{m.id}}">Rate it!</a>
+              </div>
+              {% else %}
+              <div class="s_btn">
+                <a class="btn btn-warning"id='r' onclick="gotologin()">Rate it!</a>
+              </div>
+              {% endif %}
+              <div id="overlay" onclick="olayoff()">
+                <div id="rate">
+                  <img id="olimg" height="300" width="300" />
+                  <p id="olp"></p>
+                  <form class="rating" action="{% url 'restuarant:Rateit' %}" method="post" name="ratingform" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div>
+                      <input style="display:none" type="number" name="r_id" value="{{restid}}">
+                      <input style="display:none" type="number" name="menuid" value="{{m.id}}">
+                      <input style="display:none" type="number" name="userid" value="{{user.id}}">
+                      <label>
+                        <input type="radio" name="stars" value="1" onchange="autosubmit()" />
+                        <span class="icon">★</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="stars" value="2" onchange="autosubmit()" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="stars" value="3" onchange="autosubmit()" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="stars" value="4" onchange="autosubmit()" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="stars" value="5" onchange="autosubmit()" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                      </label>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div id="overlay1">
+                <button type="button" class="close" aria-label="Close" onclick="olayoff1()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div id="edit">
+                  <form class="form-horizontal" action="{% url 'restuarant:edit' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input style="display:none" type="number" name="r_id" value="{{restid}}">
+                    <input style="display:none" type="number" name="menuid" value="{{m.id}}">
+                    <div class="form-group">
+                      <label class="control-label col-sm-6" for="restuarant">Restuarant Name:</label>
+                      <div class="col-sm-12">
+                        <select name="restuarant" required>
+                          {% for r in restuarant %}
+                          {% if r.restName == restname %}
+                          <option value="{{r.id}}" selected>{{r.restName}}</option>
+                          {% endif %}
+                          <option value="{{r.id}}">{{r.restName}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-6" for="menuname">Menu Name:</label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" name="menuname" value="{{m.menuName}}" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-6" for="menuPic">Menu image:</label>
+                      <div class="col-sm-12">
+                        <p style="font-size:12px">
+                          Currently:
+                          <a href="{{m.menupic.url}}">{{m.menupic}}</a>
+                          <br>
+                          Change:
+                          <input type="file" name="menuPic" onclick="count()">
+                          <input type="number" id="pic" style="display:none" name="pic">
+                        </p>
+
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-6" for="menuprice">Menu Price:</label>
+                      <div class="col-sm-12">
+                        <input type="number" class="form-control" name="menuprice" value="{{m.price}}" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">edit it!</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+            <script>
+              function count(){
+                document.getElementById("pic").value = 1;
+              }
+              function olayon(img, menudetails, mid) {
+                document.getElementById("overlay").style.display = "block";
+                document.getElementById("olimg").src = img;
+                document.getElementById("olp").innerHTML = menudetails;
+                document.getElementById("menuid").value = mid;
+              }
+
+              function olayon1() {
+                document.getElementById("overlay1").style.display = "block";
+              }
+
+              function olayoff() {
+                document.getElementById("overlay").style.display = "none";
+              }
+              function olayoff1(){
+                document.getElementById("overlay1").style.display = "none";
+              }
+
+              function autosubmit() {
+                var formobject = document.forms['ratingform'];
+                formobject.submit();
+              }
+              function gotologin(){
+                document.getElementById('r').href="{% url 'accounts:login' %}"
+              }
+            </script>
+            <script>
+              document.addEventListener('DOMContentLoaded', function(event) {
+                var restdiv = `_{{m.id}}`;
+                var totalstar = 5;
+                var rating = `{{m.rating}}`;
+                var starpercentage = (rating / totalstar) * 100;
+                var setstarpercentage = `${starpercentage}%`;
+                document.querySelector(`#${restdiv} .stars-inner`).style.width = setstarpercentage;
+              });
+            </script>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

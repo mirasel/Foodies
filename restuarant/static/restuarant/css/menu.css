@@ -1,0 +1,117 @@
+.s_btn{
+  margin: 0;
+  border: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.star{
+  display: inline-block;
+}
+
+/* .card-body{
+  padding:0.4rem;
+}
+
+.card-text{
+  margin: 0;
+} */
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+
+#rate{
+position: absolute;
+top: 50%;
+left: 50%;
+font-size: 30px;
+color: yellow;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+}
+/* .card-body{
+  padding: 0;
+}
+.rbtn{
+  padding: 0;
+} */
+
+/* rating user input */
+
+.rating {
+  display: inline-block;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+}
+
+.rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.rating label:last-child {
+  position: static;
+}
+
+.rating label:nth-child(1) {
+  z-index: 5;
+}
+
+.rating label:nth-child(2) {
+  z-index: 4;
+}
+
+.rating label:nth-child(3) {
+  z-index: 3;
+}
+
+.rating label:nth-child(4) {
+  z-index: 2;
+}
+
+.rating label:nth-child(5) {
+  z-index: 1;
+}
+
+.rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rating label .icon {
+  float: left;
+  color: transparent;
+}
+
+.rating label:last-child .icon {
+  color: #000;
+}
+
+.rating:not(:hover) label input:checked ~ .icon,
+.rating:hover label:hover input ~ .icon {
+  color: yellow;
+}
+
+.rating label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #09f;
+}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}New Addition {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'CUD/cud.css' %}" />
+{% endblock %}
+{% block addactive %}active{% endblock %}
+{% block body %}
+<div class="container">
+  <div class="option">
+    <h1>Choose Option</h1>
+    <a class="btn btn-warning" onclick="olayon('overlay1')">Add Place</a><br><br>
+    <a class="btn btn-warning" onclick="olayon('overlay2')">Add Restuarant</a><br><br>
+    <a class="btn btn-warning" onclick="olayon('overlay3')">Add Menu</a>
+
+    <div id="overlay1">
+      <button type="button" class="close" aria-label="Close" onclick="olayoff('overlay1')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="add">
+        <form class="form-horizontal" action="{% url 'cud:place' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="placename">Place Name:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" name="placename" placeholder="Enter a valid place name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-success">Add it!</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="overlay2">
+      <button type="button" class="close" aria-label="Close" onclick="olayoff('overlay2')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="add">
+        <form class="form-horizontal" action="{% url 'cud:restuarant' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="restuarantname">Restuarant Name:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" name="restuarantname" placeholder="Enter a restuarant name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="restuarantpic">Restuarant image:</label>
+            <div class="col-sm-12">
+              <input type="file" name="restuarantpic" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="place">Place Name:</label>
+            <div class="col-sm-12">
+              <select name="place" required>
+                <option value="" selected="">---------</option>
+                {% for p in place %}
+                <option value="{{p.id}}">{{p.PlaceName}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-success">Add it!</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="overlay3">
+      <button type="button" class="close" aria-label="Close" onclick="olayoff('overlay3')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="add">
+        <form class="form-horizontal" action="{% url 'cud:menu' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="restuarant">Restuarant Name:</label>
+            <div class="col-sm-12">
+              <select name="restuarant" required>
+                <option value="" selected="">---------</option>
+                {% for r in restuarant %}
+                <option value="{{r.id}}">{{r.restName}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="menuname">Menu Name:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" name="menuname" placeholder="Enter a menu name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="menupic">Menu image:</label>
+            <div class="col-sm-12">
+              <input type="file" name="menupic" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="menuprice">Menu Price:</label>
+            <div class="col-sm-12">
+              <input type="number" class="form-control" name="menuprice" placeholder="Enter a price" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-success">Add it!</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function olayon(id) {
+      document.getElementById(id).style.display = "block";
+    }
+
+    function olayoff(id) {
+      document.getElementById(id).style.display = "none";
+
+    }
+  </script>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block loginactive %}active{% endblock %}
+
+{% block body %}
+<div class="container">
+  <form class="form-horizontal" action="{% url 'accounts:login' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="Username">Username:</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" name="username" placeholder="Enter Username">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password:</label>
+      <div class="col-sm-4">
+        <input type="password" class="form-control" name="password" placeholder="Enter password">
+      </div>
+    </div>
+    <!-- <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-4">
+      <div class="checkbox">
+        <label><input type="checkbox"> Remember me</label>
+      </div>
+    </div>
+  </div> -->
+
+    <div class="form-group" style="color:red;">
+      <div class="col-sm-4">
+        {% if error %}
+        {{error}}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-success">Login</button>
+        <a class="btn btn-primary" href="{% url 'accounts:signup' %}">SignUp</a>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Foodies{% endblock %}
+{% block homeactive %}active{% endblock %}
+
+{%block body%}
+<section class="text-center">
+  <div class="container-fluid">
+    <div class="container">
+      <h1 class="jumbotron-heading">Welcome to Foodies!!</h1>
+      <p class="lead m">It's a demo website</p>
+      <p class="lead m">Search!! Rate!! Enjoy!!</p>
+    </div>
+  </div>
+</section>
+
+<div class="album py-5 bg-transparent">
+  <div class="container">
+
+    <div class="row">
+      {% for r in rest %}
+      <div class="col-md-3">
+        <a class="btn" style="color:inherit" href="{% url 'restuarant:Menu' r.id %}">
+          <div class="br card mb-3 shadow-sm">
+            <img class="br" src="{{r.restPic.url}}" height="200" width="200" />
+            <div class="card-body">
+              <p class="card-text">{{r.restName}}</p>
+              <div class="_{{r.id}}">
+                <div class="stars-outer">
+                  <div class="stars-inner"></div>
+                </div>
+              </div>
+              <script>
+                document.addEventListener('DOMContentLoaded', function(event) {
+                  var restdiv = `_{{r.id}}`;
+                  var totalstar = 5;
+                  var rating = `{{r.rating}}`;
+                  var starpercentage = (rating / totalstar) * 100;
+                  var setstarpercentage = `${starpercentage}%`;
+                  document.querySelector(`.${restdiv} .stars-inner`).style.width = setstarpercentage;
+                });
+              </script>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{%endblock%}
