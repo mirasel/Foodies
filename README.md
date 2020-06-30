@@ -24,10 +24,10 @@ Rating a menu
 
 ## Admin View
 Menu page - admin can edit or delete menu from here
-![GitHub Logo](/Images/edit.png)
+![GitHub Logo](/Images/menu_a.png)
 
 Menu edit option
-![GitHub Logo](/Images/menu_a.png)
+![GitHub Logo](/Images/edit.png)
 
 Adding new place for restaurants
 ![GitHub Logo](/Images/place.png)
